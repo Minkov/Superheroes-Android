@@ -1,4 +1,4 @@
-package com.minkov.superheroes;
+package com.minkov.superheroes.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;

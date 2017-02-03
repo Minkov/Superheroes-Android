@@ -1,6 +1,7 @@
-package com.minkov.superheroes.ui;
+package com.minkov.superheroes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,13 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.minkov.superheroes.R;
-import com.minkov.superheroes.SuperheroesApplication;
+import com.minkov.superheroes.base.ICanNavigateWith;
 import com.minkov.superheroes.models.Superhero;
+import com.minkov.superheroes.superheroes.details.SuperheroDetailsActivity;
 import com.minkov.superheroes.tabs.AboutFragment;
 import com.minkov.superheroes.tabs.FactionsListFragment;
 import com.minkov.superheroes.tabs.SearchFragment;
@@ -30,7 +30,7 @@ import com.minkov.superheroes.tabs.SuperheroesListFragment;
 import com.minkov.superheroes.tasks.HttpAsyncTask;
 import com.minkov.superheroes.tasks.HttpPostAsyncTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ICanNavigateWith<Superhero> {
 
     private TabsAdapter tabsAdapter;
 
@@ -102,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void navigateWith(Superhero superhero) {
+        Intent intent = new Intent(this, SuperheroDetailsActivity.class);
+        intent.putExtra(SuperheroDetailsActivity.SUPERHERO_INTENT_KEY, superhero);
+        this.startActivity(intent);
+    }
+
     public class TabsAdapter extends FragmentStatePagerAdapter {
 
         public TabsAdapter(FragmentManager fm) {
@@ -146,19 +153,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void createSuperhero(Superhero superhero) {
         String url = ((SuperheroesApplication) this.getApplication()).getApiBaseUrl()
                 + "superheroes";
-        final Context ctx = this;
-
         new HttpPostAsyncTask<>(superhero, Superhero.class, new HttpAsyncTask.OnDataReady<Superhero>() {
             @Override
             public void onReady(Superhero data) {
-                Toast.makeText(ctx, "Created!", Toast.LENGTH_SHORT)
-                        .show();
+                //  hack to reload the activity
+                finish();
+                startActivity(getIntent());
             }
-        })
-                .execute(url);
+        }).execute(url);
     }
 }

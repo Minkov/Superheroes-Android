@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.minkov.superheroes.LoadingFragment;
+import com.minkov.superheroes.base.ICanNavigateWith;
+import com.minkov.superheroes.ui.LoadingFragment;
 import com.minkov.superheroes.R;
 import com.minkov.superheroes.SuperheroesApplication;
 import com.minkov.superheroes.adapters.SuperheroesAdapter;
@@ -50,11 +51,11 @@ public class SuperheroesListFragment extends Fragment {
         this.lvSuperheroes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(getContext(), AddSuperheroActivity.class);
-//                startActivity(intent);
-
-
-
+                if (getActivity() instanceof ICanNavigateWith) {
+                    Superhero superhero = superheroes.get(position);
+                    ((ICanNavigateWith<Superhero>) getActivity())
+                            .navigateWith(superhero);
+                }
             }
         });
 
@@ -86,4 +87,7 @@ public class SuperheroesListFragment extends Fragment {
         }).execute(this.apiUrl);
     }
 
+    public void addSuperhero(Superhero data) {
+        this.superheroesAdapter.add(data);
+    }
 }
