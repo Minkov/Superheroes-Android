@@ -1,6 +1,5 @@
 package com.minkov.superheroes.superheroes.details;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,9 +10,6 @@ import android.widget.TextView;
 import com.minkov.superheroes.R;
 import com.minkov.superheroes.models.Superhero;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SuperheroDetailsFragment extends Fragment {
     private Superhero superhero;
 
