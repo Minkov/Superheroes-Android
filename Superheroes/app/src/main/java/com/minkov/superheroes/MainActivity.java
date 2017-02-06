@@ -26,7 +26,7 @@ import com.minkov.superheroes.superheroes.details.SuperheroDetailsActivity;
 import com.minkov.superheroes.tabs.AboutFragment;
 import com.minkov.superheroes.tabs.FactionsListFragment;
 import com.minkov.superheroes.tabs.SearchFragment;
-import com.minkov.superheroes.tabs.SuperheroesListFragment;
+import com.minkov.superheroes.superheroes.list.SuperheroesListFragment;
 import com.minkov.superheroes.tasks.HttpAsyncTask;
 import com.minkov.superheroes.tasks.HttpPostAsyncTask;
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements ICanNavigateWith<
                                         String secretIdentity = ((EditText) modal.findViewById(R.id.etSuperheroSecretIdentity))
                                                 .getText().toString();
 
-                                        Superhero superhero = new Superhero(name, secretIdentity);
+                                        Superhero superhero = new Superhero(null, name, secretIdentity, null);
                                         createSuperhero(superhero);
                                     }
                                 })
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ICanNavigateWith<
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new SuperheroesListFragment();
+                    return SuperheroesListFragment.create();
                 case 1:
                     return new FactionsListFragment();
                 case 2:

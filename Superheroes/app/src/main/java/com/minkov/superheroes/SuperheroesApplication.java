@@ -7,7 +7,7 @@ import com.minkov.superheroes.models.Superhero;
 import java.util.ArrayList;
 
 public class SuperheroesApplication extends Application {
-    private static final String API_BASE_URL = "http://192.168.1.174:3001/";
+    private static final String API_BASE_URL = "http://192.168.43.140:3001/";
 
     public SuperheroesApplication() {
         super();
